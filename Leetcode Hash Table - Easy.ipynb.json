@@ -1,0 +1,2594 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{}\n",
+      "{3: 0}\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "[0, 1]"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"1. Two Sum\" \"also in array\"\n",
+    "\"\"\"Given an array of integers, return indices of the two numbers such that they add up to a specific target.\n",
+    "\n",
+    "You may assume that each input would have exactly one solution, and you may not use the same element twice.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Given nums = [2, 7, 11, 15], target = 9,\n",
+    "\n",
+    "Because nums[0] + nums[1] = 2 + 7 = 9,\n",
+    "return [0, 1].\n",
+    "\"\"\"\n",
+    "class Solution:\n",
+    "    def twoSum(self, nums, target):\n",
+    "        seen = {}\n",
+    "        for i, v in enumerate(nums):\n",
+    "            remaining = target - v\n",
+    "            print(seen)\n",
+    "            if remaining in seen:\n",
+    "                return [seen[remaining], i]\n",
+    "            seen[v] = i\n",
+    "        return []   \n",
+    "Solution().twoSum([3,3,3,2], 6)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"136. Single Number\"\n",
+    "\"\"\"Given a non-empty array of integers, every element appears twice except for one. Find that single one.\n",
+    "Note:\n",
+    "\n",
+    "Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: [2,2,1]\n",
+    "Output: 1\n",
+    "Example 2:\n",
+    "\n",
+    "Input: [4,1,2,1,2]\n",
+    "Output: 4\"\"\"\n",
+    "\"Sample solution\"\n",
+    "from collections import defaultdict\n",
+    "class Solution:\n",
+    "    def singleNumber(nums):\n",
+    "        hash_table = defaultdict(int)\n",
+    "        for i in nums:\n",
+    "            hash_table[i] += 1\n",
+    "        \n",
+    "        for i in hash_table:\n",
+    "            if hash_table[i] == 1:\n",
+    "                return i\n",
+    "Solution.singleNumber([4,1,2,1,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, too slow\"\n",
+    "def singleNumber(nums):\n",
+    "    dic = {nums.count(i): i for i in set(nums)}\n",
+    "    return dic[1]\n",
+    "\n",
+    "singleNumber([4,1,2,1,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"170. Two Sum III - Data structure design\"\n",
+    "\"\"\"设计并实现一个 TwoSum 的类，使该类需要支持 add 和 find 的操作。\n",
+    "\n",
+    "add 操作 -  对内部数据结构增加一个数。\n",
+    "find 操作 - 寻找内部数据结构中是否存在一对整数，使得两数之和与给定的数相等。\n",
+    "\n",
+    "示例 1:\n",
+    "\n",
+    "add(1); add(3); add(5);\n",
+    "find(4) -> true\n",
+    "find(7) -> false\n",
+    "示例 2:\n",
+    "\n",
+    "add(3); add(1); add(2);\n",
+    "find(3) -> true\n",
+    "find(6) -> false\"\"\"\n",
+    "class TwoSum(object):\n",
+    " \n",
+    "    def __init__(self):\n",
+    "        \"\"\"\n",
+    "        Initialize your data structure here.\n",
+    "        \"\"\"\n",
+    "        from collections import defaultdict\n",
+    "        self.dict = defaultdict(int)\n",
+    "        \n",
+    " \n",
+    "    def add(self, number):\n",
+    "        \"\"\"\n",
+    "        Add the number to an internal data structure..\n",
+    "        :type number: int\n",
+    "        :rtype: None\n",
+    "        \"\"\"\n",
+    "        self.dict[number] += 1\n",
+    " \n",
+    "    def find(self, value):\n",
+    "        \"\"\"\n",
+    "        Find if there exists any pair of numbers which sum is equal to the value.\n",
+    "        :type value: int\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        for key, val in self.dict.items():\n",
+    "            if value - key in self.dict:\n",
+    "                if key * 2 == value and self.dict[key] > 1:\n",
+    "                    return True\n",
+    "                elif key * 2 != value:\n",
+    "                    return True\n",
+    "        return False"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"202. Happy Number\"\n",
+    "\"\"\"Write an algorithm to determine if a number n is \"happy\".\n",
+    "\n",
+    "A happy number is a number defined by the following process: Starting with any positive integer, \n",
+    "replace the number by the sum of the squares of its digits, and repeat the process until the number \n",
+    "equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. \n",
+    "Those numbers for which this process ends in 1 are happy numbers.\n",
+    "\n",
+    "Return True if n is a happy number, and False if not.\n",
+    "\n",
+    "Example: \n",
+    "\n",
+    "Input: 19\n",
+    "Output: true\n",
+    "Explanation: \n",
+    "1^2 + 9^2 = 82\n",
+    "8^2 + 2^2 = 68\n",
+    "6^2 + 8^2 = 100\n",
+    "1^2 + 0^2 + 0^2 = 1\"\"\"\n",
+    "\"Sample Solution\"\n",
+    "class Solution:\n",
+    "    def isHappy(n):\n",
+    "        s = set()\n",
+    "        while True:\n",
+    "            num = str(n)\n",
+    "            temp = 0\n",
+    "            for i in num:     \n",
+    "                temp += int(i)**2\n",
+    "            if temp in s:            #无限循环是因为出现了之前出现的数\n",
+    "                return False\n",
+    "            elif temp == 1:\n",
+    "                return True\n",
+    "            else:\n",
+    "                s.add(temp)\n",
+    "                n = temp\n",
+    "Solution.isHappy()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, too slow\"\n",
+    "def isHappy(n):\n",
+    "    a = 0\n",
+    "    while n !=1:\n",
+    "        n = sum([int(i)**2 for i in str(n)])\n",
+    "        a +=1\n",
+    "        if a==100: return False\n",
+    "    return True\n",
+    "\n",
+    "isHappy(19)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"204. Count Primes\"\n",
+    "\"\"\"Count the number of prime numbers less than a non-negative number, n.\n",
+    "Example:\n",
+    "Input: 10\n",
+    "Output: 4\n",
+    "Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.\"\"\"\n",
+    "\"\"\"设置一个长度为n的数组 is_primes，用于记录i是否为质数，若是，is_primes[i]=True,反之为False\n",
+    "遍历1到n的数，当is_primes[i]是质数是，将i的倍数位全部置False，例如：\n",
+    "当i=2为质数，就将4，6，8...全部修改为False\n",
+    "最终记录is_primes中为True的个数即可\"\"\"\n",
+    "\n",
+    "class Solution:\n",
+    "    def countPrimes(n):\n",
+    "        if n<2:\n",
+    "            return 0\n",
+    "        nums = list(range(n+1))\n",
+    "        is_primes = [True] * n\n",
+    "        counter = 0\n",
+    "        for i in range(2,n):\n",
+    "            if is_primes[i]:\n",
+    "                counter += 1\n",
+    "                is_primes[i*i:n:i] = [False] * len( is_primes[i * i: n: i])\n",
+    "        return counter\n",
+    "Solution.countPrimes(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"205. Isomorphic Strings\"\n",
+    "\"\"\"Given two strings s and t, determine if they are isomorphic.\n",
+    "\n",
+    "Two strings are isomorphic if the characters in s can be replaced to get t.\n",
+    "\n",
+    "All occurrences of a character must be replaced with another character while preserving\n",
+    "the order of characters. No two characters may map to the same character but a character may map to itself.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: s = \"egg\", t = \"add\"\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input: s = \"foo\", t = \"bar\"\n",
+    "Output: false\n",
+    "Example 3:\n",
+    "\n",
+    "Input: s = \"paper\", t = \"title\"\n",
+    "Output: true\"\"\"\n",
+    "\"Sample Solution\"\n",
+    "class Solution(object):\n",
+    "    def isIsomorphic(s, t):\n",
+    "        \"\"\"\n",
+    "        :type s: str\n",
+    "        :type t: str\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        return len(set(zip(s,t))) == len(set(s)) == len(set(t))   #太强了\n",
+    "Solution.isIsomorphic('egg', 'add')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"217. Contains Duplicate\" \"also in array\"\n",
+    "\"\"\"Given an array of integers, find if the array contains any duplicates.\n",
+    "\n",
+    "Your function should return true if any value appears at least twice in the array, \n",
+    "and it should return false if every element is distinct.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: [1,2,3,1]\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input: [1,2,3,4]\n",
+    "Output: false\n",
+    "Example 3:\n",
+    "\n",
+    "Input: [1,1,1,3,3,4,3,2,4,2]\n",
+    "Output: true\"\"\"\n",
+    "class Solution:\n",
+    "    def containsDuplicate(nums):\n",
+    "        return len(set(nums)) != len(nums)\n",
+    "Solution.containsDuplicate([1,1,1,3,3,4,3,2,4,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{}\n",
+      "{1: 0}\n",
+      "{1: 0, 2: 1}\n",
+      "{1: 0, 2: 1, 3: 2}\n",
+      "{1: 3, 2: 1, 3: 2}\n",
+      "{1: 3, 2: 4, 3: 2}\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"219. Contains Duplicate II\" \"also in array\"\n",
+    "\"\"\"Given an array of integers and an integer k, find out whether there are two distinct \n",
+    "indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: nums = [1,2,3,1], k = 3\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input: nums = [1,0,1,1], k = 1\n",
+    "Output: true\n",
+    "Example 3:\n",
+    "\n",
+    "Input: nums = [1,2,3,1,2,3], k = 2\n",
+    "Output: false\"\"\"\n",
+    "class Solution(object):\n",
+    "    def containsNearbyDuplicate(nums, k):  #*相邻*的两个等数index的差\n",
+    "        \"\"\"\n",
+    "        :type nums: List[int]\n",
+    "        :type k: int\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        record = dict()\n",
+    "        for i, num in enumerate(nums):\n",
+    "            print(record)\n",
+    "            if record.get(num, -1) != -1:\n",
+    "                if i - record[num] <= k:\n",
+    "                    return True\n",
+    "            record[num] = i\n",
+    "        return False\n",
+    "Solution.containsNearbyDuplicate([1,2,3,1,2,3], 2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 52,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"242. Valid Anagram\"\n",
+    "\"\"\"Given two strings s and t , write a function to determine if t is an anagram of s.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: s = \"anagram\", t = \"nagaram\"\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input: s = \"rat\", t = \"car\"\n",
+    "Output: false\"\"\"\n",
+    "class Solution:\n",
+    "    def isAnagram(s, t):\n",
+    "        if len(s) != len(t):\n",
+    "            return False\n",
+    "        return sorted(s) == sorted(t)\n",
+    "Solution.isAnagram(\"anagram\", \"nagaram\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "6\n",
+      "69\n",
+      "698\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"246. Strobogrammatic Number\"\n",
+    "\"\"\"A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).\n",
+    "\n",
+    "Write a function to determine if a number is strobogrammatic. The number is represented as a string.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input:  \"69\"\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input:  \"88\"\n",
+    "Output: true\n",
+    "Example 3:\n",
+    "\n",
+    "Input:  \"962\"\n",
+    "Output: false\"\"\"\n",
+    "class Solution(object):\n",
+    "    def isStrobogrammatic(num):\n",
+    "        \"\"\"\n",
+    "        :type num: str\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        d = {'0':'0','1':'1','6':'9','8':'8','9':'6'}\n",
+    "        ans = ''\n",
+    "        for n in num:\n",
+    "            if n not in d:\n",
+    "                return False\n",
+    "            ans += d[n]\n",
+    "            print(ans)\n",
+    "        return ans[::-1] == num\n",
+    "Solution.isStrobogrammatic('968')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Counter({'c': 2, 'a': 2, 'r': 2, 'e': 1})\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 73,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"266. Palindrome Permutation\"\n",
+    "\"\"\"Given a string, determine if a permutation of the string could form a palindrome.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: “code”\n",
+    "Output: false\n",
+    "Example 2:\n",
+    "\n",
+    "Input: “aab”\n",
+    "Output: true\n",
+    "Example 3:\n",
+    "\n",
+    "Input: “carerac”\n",
+    "Output: true\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def canPermutePalindrome(s):\n",
+    "        \"\"\"\n",
+    "        :type s: str\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        import collections\n",
+    "        count = collections.Counter(s)\n",
+    "        print(count)\n",
+    "        chance = 1\n",
+    "        for char in count:\n",
+    "            if count[char]%2 != 0:\n",
+    "                chance -= 1\n",
+    "                if chance < 0:\n",
+    "                    return False\n",
+    "        return True\n",
+    "Solution.canPermutePalindrome('carerac')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'b': 1, 'a': 2}\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 74,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution\"\n",
+    "def canPermutePalindrome(s):\n",
+    "    dic = {i: s.count(i) for i in set(s)}\n",
+    "    count = 0\n",
+    "    print(dic)\n",
+    "    for i in dic:\n",
+    "        if dic[i]%2 ==1:\n",
+    "            count += 1\n",
+    "    return count<=1\n",
+    "\n",
+    "canPermutePalindrome('aab')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 114,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 114,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"290. Word Pattern\"\n",
+    "\"\"\"Given a pattern and a string str, find if str follows the same pattern.\n",
+    "\n",
+    "Here follow means a full match, such that there is a bijection between a letter in pattern \n",
+    "and a non-empty word in str.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: pattern = \"abba\", str = \"dog cat cat dog\"\n",
+    "Output: true\n",
+    "Example 2:\n",
+    "\n",
+    "Input:pattern = \"abba\", str = \"dog cat cat fish\"\n",
+    "Output: false\n",
+    "Example 3:\n",
+    "\n",
+    "Input: pattern = \"aaaa\", str = \"dog cat cat dog\"\n",
+    "Output: false\n",
+    "Example 4:\n",
+    "\n",
+    "Input: pattern = \"abba\", str = \"dog dog dog dog\"\n",
+    "Output: false\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution:\n",
+    "    def wordPattern(pattern, str):\n",
+    "        map_char = {}\n",
+    "        map_word = {}\n",
+    "        \n",
+    "        words = str.split(' ')\n",
+    "        if len(words) != len(pattern):\n",
+    "            return False\n",
+    "        \n",
+    "        for c, w in zip(pattern, words):\n",
+    "            if c not in map_char:\n",
+    "                if w in map_word:\n",
+    "                    return False\n",
+    "                else:\n",
+    "                    map_char[c] = w\n",
+    "                    map_word[w] = c\n",
+    "            else:\n",
+    "                if map_char[c] != w:\n",
+    "                    return False\n",
+    "        return True\n",
+    "Solution.wordPattern(\"aaaa\", \"dog cat cat dog\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 116,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 116,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution\"\n",
+    "def wordPattern(pattern,stri):\n",
+    "    str_split = stri.split()\n",
+    "    pattern_split = [i for i in pattern]\n",
+    "    if len(str_split) != len(pattern_split):\n",
+    "        return False\n",
+    "    pair = set(zip(pattern, str_split))\n",
+    "    return len(pair) == len(set(str_split)) == len(set(pattern_split))\n",
+    "\n",
+    "pattern = \"abba\"\n",
+    "stri = \"dog cat cat dog\"\n",
+    "wordPattern(pattern, stri)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 144,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'1A1B'"
+      ]
+     },
+     "execution_count": 144,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"299. Bulls and Cows\"\n",
+    "\"\"\"You are playing the following Bulls and Cows game with your friend: \n",
+    "You write down a number and ask your friend to guess what the number is. \n",
+    "Each time your friend makes a guess, you provide a hint that indicates how many digits \n",
+    "in said guess match your secret number exactly in both digit and position (called \"bulls\") \n",
+    "and how many digits match the secret number but locate in the wrong position (called \"cows\"). \n",
+    "Your friend will use successive guesses and hints to eventually derive the secret number.\n",
+    "\n",
+    "Write a function to return a hint according to the secret number and friend's guess, \n",
+    "use A to indicate the bulls and B to indicate the cows. \n",
+    "\n",
+    "Please note that both secret number and friend's guess may contain duplicate digits.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: secret = \"1807\", guess = \"7810\"\n",
+    "\n",
+    "Output: \"1A3B\"\n",
+    "\n",
+    "Explanation: 1 bull and 3 cows. The bull is 8, the cows are 0, 1 and 7.\n",
+    "Example 2:\n",
+    "\n",
+    "Input: secret = \"1123\", guess = \"0111\"\n",
+    "\n",
+    "Output: \"1A1B\"\n",
+    "\n",
+    "Explanation: The 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow.\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def getHint(secret, guess):\n",
+    "        \"\"\"\n",
+    "        :type secret: str\n",
+    "        :type guess: str\n",
+    "        :rtype: str\n",
+    "        \"\"\"\n",
+    "        a = 0\n",
+    "        ds, dg = {}, {}\n",
+    "        for i in range(len(secret)):\n",
+    "            if secret[i] == guess[i]:\n",
+    "                a += 1\n",
+    "            ds[secret[i]] = ds[secret[i]] + 1 if secret[i] in ds else 1\n",
+    "            dg[guess[i]] = dg[guess[i]] + 1 if guess[i] in dg else 1\n",
+    "             \n",
+    "        correct = 0\n",
+    "        for item in ds:\n",
+    "            if item in dg:\n",
+    "                correct += min(ds[item], dg[item])\n",
+    "\n",
+    "        return str(a)+'A'+str(correct-a)+'B'\n",
+    "Solution.getHint(\"1123\", \"0111\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'1A3B'"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, wrong\"\n",
+    "def getHint(secret, guess):\n",
+    "    countA = 0\n",
+    "    countB = 0\n",
+    "    for i,n in enumerate(guess):\n",
+    "        if secret[i] == n:\n",
+    "            countA += 1\n",
+    "        elif n in secret:\n",
+    "            countB += 1\n",
+    "    return str(countA) +'A'+ str(countB) +'B'\n",
+    "\n",
+    "secret = \"1807\"\n",
+    "guess = \"7810\"\n",
+    "getHint(secret, guess)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[2]"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"349. Intersection of Two Arrays\"\n",
+    "\"\"\"Given two arrays, write a function to compute their intersection.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: nums1 = [1,2,2,1], nums2 = [2,2]\n",
+    "Output: [2]\n",
+    "Example 2:\n",
+    "\n",
+    "Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]\n",
+    "Output: [9,4]\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution:\n",
+    "    def intersection(nums1, nums2):\n",
+    "        \"\"\"\n",
+    "        :type nums1: List[int]\n",
+    "        :type nums2: List[int]\n",
+    "        :rtype: List[int]\n",
+    "        \"\"\"  \n",
+    "        set1 = set(nums1)\n",
+    "        set2 = set(nums2)\n",
+    "        return list(set2 & set1)\n",
+    "Solution.intersection([1,2,2,1],[2,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[9, 4]"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, also good\"\n",
+    "def intersection(nums1, nums2):\n",
+    "    nums1set = set(nums1)\n",
+    "    nums2set = set(nums2)\n",
+    "    return [i for i in nums1set if i in nums2set]\n",
+    "\n",
+    "nums1 = [4,9,5]\n",
+    "nums2 = [9,4,9,8,4]\n",
+    "intersection(nums1, nums2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[2, 2]"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"350. Intersection of Two Arrays II\"\n",
+    "\"\"\"Given two arrays, write a function to compute their intersection.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: nums1 = [1,2,2,1], nums2 = [2,2]\n",
+    "Output: [2,2]\n",
+    "Example 2:\n",
+    "\n",
+    "Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]\n",
+    "Output: [4,9]\"\"\"\n",
+    "\"Sample solution\"\n",
+    "import collections\n",
+    "class Solution:\n",
+    "    def intersect(nums1, nums2):\n",
+    "        \"\"\"\n",
+    "        :type nums1: List[int]\n",
+    "        :type nums2: List[int]\n",
+    "        :rtype: List[int]\n",
+    "        \"\"\"\n",
+    "        nums1 = collections.Counter(nums1)\n",
+    "        res = []\n",
+    "        for num in nums2:\n",
+    "            if num in nums1 and nums1[num]>0:\n",
+    "                res.append(num)\n",
+    "                nums1[num] -= 1\n",
+    "        return res\n",
+    "Solution.intersect([1,2,2,1],[2,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[9, 4]"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, slow\"\n",
+    "def intersect(nums1, nums2):\n",
+    "    result = []\n",
+    "    for i in nums2:\n",
+    "        if i in nums1:\n",
+    "            result.append(i)\n",
+    "            nums1.remove(i)\n",
+    "    return result\n",
+    "intersect([4,9,5],[9,4,9,8,4])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"359. Logger Rate Limiter\"\n",
+    "\"\"\"Design a logger system that receive stream of messages along with its timestamps, \n",
+    "each message should be printed if and only if it is not printed in the last 10 seconds.\n",
+    "\n",
+    "Given a message and a timestamp (in seconds granularity), return true if the message \n",
+    "should be printed in the given timestamp, otherwise returns false.\n",
+    "\n",
+    "It is possible that several messages arrive roughly at the same time.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Logger logger = new Logger();\n",
+    "\n",
+    "// logging string “foo” at timestamp 1\n",
+    "logger.shouldPrintMessage(1, “foo”); returns true;\n",
+    "\n",
+    "// logging string “bar” at timestamp 2\n",
+    "logger.shouldPrintMessage(2,“bar”); returns true;\n",
+    "\n",
+    "// logging string “foo” at timestamp 3\n",
+    "logger.shouldPrintMessage(3,“foo”); returns false;\n",
+    "\n",
+    "// logging string “bar” at timestamp 8\n",
+    "logger.shouldPrintMessage(8,“bar”); returns false;\n",
+    "\n",
+    "// logging string “foo” at timestamp 10\n",
+    "logger.shouldPrintMessage(10,“foo”); returns false;\n",
+    "\n",
+    "// logging string “foo” at timestamp 11\n",
+    "logger.shouldPrintMessage(11,“foo”); returns true;\"\"\"\n",
+    "\n",
+    "\"Sample Solution, 不太懂\"\n",
+    "class Logger:\n",
+    "\n",
+    "    def __init__(self):\n",
+    "        \"\"\"\n",
+    "        Initialize your data structure here.\n",
+    "        \"\"\"\n",
+    "        self.data = dict()\n",
+    "        \n",
+    "\n",
+    "    def shouldPrintMessage(self, timestamp: 'int', message: 'str') -> 'bool':\n",
+    "        \"\"\"\n",
+    "        Returns true if the message should be printed in the given timestamp, otherwise returns false.\n",
+    "        If this method returns false, the message will not be printed.\n",
+    "        The timestamp is in seconds granularity.\n",
+    "        \"\"\"\n",
+    "        if message not in self.data or timestamp - self.data[message] >= 10:\n",
+    "            self.data[message] = timestamp\n",
+    "            return True\n",
+    "        else:\n",
+    "            return False"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-1"
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"387. First Unique Character in a String, aslo in string\"\n",
+    "\"\"\"Given a string, find the first non-repeating character in it and return its index. \n",
+    "If it doesn't exist, return -1.\n",
+    "\n",
+    "Examples:\n",
+    "\n",
+    "s = \"leetcode\"\n",
+    "return 0.\n",
+    "\n",
+    "s = \"loveleetcode\"\n",
+    "return 2.\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution:\n",
+    "    def firstUniqChar(s):\n",
+    "        \"\"\"\n",
+    "        :type s: str\n",
+    "        :rtype: int\n",
+    "        \"\"\"\n",
+    "        # build hash map : character and how often it appears\n",
+    "        count = collections.Counter(s)\n",
+    "        \n",
+    "        # find the index\n",
+    "        for idx, ch in enumerate(s):\n",
+    "            if count[ch] == 1:\n",
+    "                return idx     \n",
+    "        return -1   \n",
+    "Solution.firstUniqChar('bb')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2"
+      ]
+     },
+     "execution_count": 59,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, exceed time limit, but technically they are the same\"\n",
+    "def firstUniqChar(s):\n",
+    "    dic = {i:s.count(i) for i in s}\n",
+    "    for i,n in enumerate(s):\n",
+    "        if dic[n] ==1:\n",
+    "            return i\n",
+    "    return -1\n",
+    "\n",
+    "firstUniqChar('loveleetcode')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'e'"
+      ]
+     },
+     "execution_count": 66,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"389. Find the Difference\"\n",
+    "\"\"\"Given two strings s and t which consist of only lowercase letters.\n",
+    "\n",
+    "String t is generated by random shuffling string s and then add one more letter at a random position.\n",
+    "\n",
+    "Find the letter that was added in t.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Input:\n",
+    "s = \"abcd\"\n",
+    "t = \"abcde\"\n",
+    "\n",
+    "Output:\n",
+    "e\n",
+    "\n",
+    "Explanation:\n",
+    "'e' is the letter that was added.\"\"\"\n",
+    "\"Sample solution\"\n",
+    "from collections import Counter\n",
+    "class Solution(object):\n",
+    "    def findTheDifference(s, t):\n",
+    "        return list(Counter(t)-Counter(s))[0]\n",
+    "#         \"\"\"\n",
+    "#         :type s: str\n",
+    "#         :type t: str\n",
+    "#         :rtype: str\n",
+    "#         \"\"\"\n",
+    "#         res = 0\n",
+    "#         for c in s+t:\n",
+    "#             res ^= ord(c)        #另一种方法，没看懂\n",
+    "#             print(ord(c),res)\n",
+    "#         return chr(res)\n",
+    "        \n",
+    "Solution.findTheDifference(\"abcd\",\"abcde\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'e'"
+      ]
+     },
+     "execution_count": 68,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solition, slow\"\n",
+    "def findTheDifference(s,t):\n",
+    "    for i,n in enumerate(sorted(s)):\n",
+    "        if n != sorted(t)[i]:\n",
+    "            return sorted(t)[i]\n",
+    "    return sorted(t)[-1]\n",
+    "findTheDifference(\"abcd\",\"abcde\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "7"
+      ]
+     },
+     "execution_count": 74,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"409. Longest Palindrome\"\n",
+    "\"\"\"Given a string which consists of lowercase or uppercase letters, find the length of \n",
+    "the longest palindromes that can be built with those letters.\n",
+    "\n",
+    "This is case sensitive, for example \"Aa\" is not considered a palindrome here.\n",
+    "\n",
+    "Note:\n",
+    "Assume the length of given string will not exceed 1,010.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Input:\n",
+    "\"abccccdd\"\n",
+    "\n",
+    "Output:\n",
+    "7\n",
+    "\n",
+    "Explanation:\n",
+    "One longest palindrome that can be built is \"dccaccd\", whose length is 7.\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution:\n",
+    "    def longestPalindrome(s):\n",
+    "        ans = 0\n",
+    "        for v in collections.Counter(s).values():\n",
+    "            ans += v // 2 * 2\n",
+    "            if ans % 2 == 0 and v % 2 == 1:\n",
+    "                ans += 1\n",
+    "        return ans\n",
+    "Solution.longestPalindrome(\"abccccdd\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 72,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "7"
+      ]
+     },
+     "execution_count": 72,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution\"\n",
+    "def longestPalindrome(s):\n",
+    "    d = Counter(s)\n",
+    "    res = 0\n",
+    "    for i in d:\n",
+    "        if d[i]%2==0:\n",
+    "            res += d[i]\n",
+    "        else:\n",
+    "            res += d[i]-1\n",
+    "    if len(s)==res:\n",
+    "        return res\n",
+    "    return res+1\n",
+    "\n",
+    "longestPalindrome(\"abccccdd\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2"
+      ]
+     },
+     "execution_count": 77,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"447. Number of Boomerangs\"\n",
+    "\"\"\"Given n points in the plane that are all pairwise distinct, a \"boomerang\" \n",
+    "is a tuple of points (i, j, k) such that the distance between i and j equals \n",
+    "the distance between i and k (the order of the tuple matters).\n",
+    "\n",
+    "Find the number of boomerangs. You may assume that n will be at most 500 and \n",
+    "coordinates of points are all in the range [-10000, 10000] (inclusive).\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Input:\n",
+    "[[0,0],[1,0],[2,0]]\n",
+    "\n",
+    "Output:\n",
+    "2\n",
+    "\n",
+    "Explanation:\n",
+    "The two boomerangs are [[1,0],[0,0],[2,0]] and [[1,0],[2,0],[0,0]]\"\"\"\n",
+    "\"Sample solution, 没太懂\"\n",
+    "class Solution:\n",
+    "    def numberOfBoomerangs(points):\n",
+    "        res = 0\n",
+    "        for a in points:\n",
+    "            dic = {}\n",
+    "            for b in points:\n",
+    "                d = (a[0]-b[0])**2 + (a[1]-b[1])**2\n",
+    "                dic[d] = 1 + dic.get(d, 0)\n",
+    "            for i in dic:\n",
+    "                res += dic[i] * (dic[i]-1)\n",
+    "        return res\n",
+    "Solution.numberOfBoomerangs([[0,0],[1,0],[2,0]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "16"
+      ]
+     },
+     "execution_count": 101,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"463. Island Perimeter\"\n",
+    "\"\"\"You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water.\n",
+    "\n",
+    "Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, \n",
+    "and there is exactly one island (i.e., one or more connected land cells).\n",
+    "\n",
+    "The island doesn't have \"lakes\" (water inside that isn't connected to the water around the island). \n",
+    "One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. \n",
+    "Determine the perimeter of the island.\n",
+    "\n",
+    " \n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Input:\n",
+    "[[0,1,0,0],\n",
+    " [1,1,1,0],\n",
+    " [0,1,0,0],\n",
+    " [1,1,0,0]]\n",
+    "\n",
+    "Output: 16\n",
+    "\n",
+    "Explanation: The perimeter is the 16 yellow stripes in the image below:\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution:\n",
+    "    def islandPerimeter(grid):\n",
+    "        \"\"\"\n",
+    "        :type grid: List[List[int]]\n",
+    "        :rtype: int\n",
+    "        \"\"\"\n",
+    "        M, N = len(grid), len(grid[0])\n",
+    "        counts = 0\n",
+    "        neighbors = 0\n",
+    "        for i in range(M):\n",
+    "            for j in range(N):\n",
+    "                if grid[i][j] == 1:\n",
+    "                    counts += 1\n",
+    "                    if i < M - 1:\n",
+    "                        if grid[i + 1][j] == 1:\n",
+    "                            neighbors += 1\n",
+    "                    if j < N - 1:\n",
+    "                        if grid[i][j + 1] == 1:\n",
+    "                            neighbors += 1\n",
+    "        return 4 * counts - 2 * neighbors\n",
+    "Solution.islandPerimeter(\n",
+    "[[0,1,0,0],\n",
+    " [1,1,1,0],\n",
+    " [0,1,0,0],\n",
+    " [1,1,0,0]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 103,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Alaska', 'Dad']"
+      ]
+     },
+     "execution_count": 103,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"500. Keyboard Row\"\n",
+    "\"\"\"Given a List of words, return the words that can be typed using letters of alphabet \n",
+    "on only one row's of American keyboard like the image below.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "Input: [\"Hello\", \"Alaska\", \"Dad\", \"Peace\"]\n",
+    "Output: [\"Alaska\", \"Dad\"]\"\"\"\n",
+    "\"Sample solution, *issubset*\"\n",
+    "class Solution(object):\n",
+    "    def findWords(words):\n",
+    "        \"\"\"\n",
+    "        :type words: List[str]\n",
+    "        :rtype: List[str]\n",
+    "        \"\"\"\n",
+    "        keyboard = [\"qwertyuiop\", \"asdfghjkl\", \"zxcvbnm\"]\n",
+    "        \n",
+    "        out = []\n",
+    "        \n",
+    "        for i in words:\n",
+    "            for line in keyboard:\n",
+    "                lword = i.lower()\n",
+    "                if set(lword).issubset(set(line)):\n",
+    "                    out.append(i)\n",
+    "        \n",
+    "        return out\n",
+    "Solution.findWords([\"Hello\", \"Alaska\", \"Dad\", \"Peace\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 115,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2"
+      ]
+     },
+     "execution_count": 115,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"575. Distribute Candies\"\n",
+    "\"\"\"Given an integer array with even length, where different numbers in this array represent \n",
+    "different kinds of candies. Each number means one candy of the corresponding kind. \n",
+    "You need to distribute these candies equally in number to brother and sister. \n",
+    "Return the maximum number of kinds of candies the sister could gain.\n",
+    "Example 1:\n",
+    "\n",
+    "Input: candies = [1,1,2,2,3,3]\n",
+    "Output: 3\n",
+    "Explanation:\n",
+    "There are three different kinds of candies (1, 2 and 3), and two candies for each kind.\n",
+    "Optimal distribution: The sister has candies [1,2,3] and the brother has candies [1,2,3], too. \n",
+    "The sister has three different kinds of candies. \n",
+    "Example 2:\n",
+    "\n",
+    "Input: candies = [1,1,2,3]\n",
+    "Output: 2\n",
+    "Explanation: For example, the sister has candies [2,3] and the brother has candies [1,1]. \n",
+    "The sister has two different kinds of candies, the brother has only one kind of candies. \"\"\"\n",
+    "\"Sample Solution, 牛\"\n",
+    "class Solution:\n",
+    "    def distributeCandies(candies):\n",
+    "        \"\"\"\n",
+    "        :type candies: List[int]\n",
+    "        :rtype: int\n",
+    "        \"\"\"\n",
+    "        return min(len(set(candies)), len(candies) // 2)\n",
+    "Solution.distributeCandies([1,1,2,3])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 119,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "5"
+      ]
+     },
+     "execution_count": 119,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"594. Longest Harmonious Subsequence\"\n",
+    "\"\"\"We define a harmounious array as an array where the difference between its maximum value \n",
+    "and its minimum value is exactly 1.\n",
+    "\n",
+    "Now, given an integer array, you need to find the length of its longest harmonious subsequence \n",
+    "among all its possible subsequences.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: [1,3,2,2,5,2,3,7]\n",
+    "Output: 5\n",
+    "Explanation: The longest harmonious subsequence is [3,2,2,2,3].\"\"\"\n",
+    "\"My Solution\"\n",
+    "class Solution:\n",
+    "    def findLHS(nums):\n",
+    "        seq = Counter(nums)\n",
+    "        Hlen = 0\n",
+    "        for i in seq:\n",
+    "            if i+1 in seq:\n",
+    "                Hlen = max(seq[i]+seq[i+1],Hlen)\n",
+    "        return Hlen\n",
+    "Solution.findLHS([1,3,2,2,5,2,3,7])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 125,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Shogun']"
+      ]
+     },
+     "execution_count": 125,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"599. Minimum Index Sum of Two Lists\"\n",
+    "\"\"\"Suppose Andy and Doris want to choose a restaurant for dinner, and they both have \n",
+    "a list of favorite restaurants represented by strings.\n",
+    "\n",
+    "You need to help them find out their common interest with the least list index sum. \n",
+    "If there is a choice tie between answers, output all of them with no order requirement. \n",
+    "You could assume there always exists an answer.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input:\n",
+    "[\"Shogun\", \"Tapioca Express\", \"Burger King\", \"KFC\"]\n",
+    "[\"Piatti\", \"The Grill at Torrey Pines\", \"Hungry Hunter Steakhouse\", \"Shogun\"]\n",
+    "Output: [\"Shogun\"]\n",
+    "Explanation: The only restaurant they both like is \"Shogun\".\n",
+    "Example 2:\n",
+    "\n",
+    "Input:\n",
+    "[\"Shogun\", \"Tapioca Express\", \"Burger King\", \"KFC\"]\n",
+    "[\"KFC\", \"Shogun\", \"Burger King\"]\n",
+    "Output: [\"Shogun\"]\n",
+    "Explanation: The restaurant they both like and have the least index sum is \"Shogun\" with index sum 1 (0+1).\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def findRestaurant(list1, list2):\n",
+    "        \"\"\"\n",
+    "        :type list1: List[str]\n",
+    "        :type list2: List[str]\n",
+    "        :rtype: List[str]\n",
+    "        \"\"\"\n",
+    "        dic1 = {word:ind for ind,word in enumerate(list1)}\n",
+    "        dic2 = {word:ind for ind,word in enumerate(list2)}\n",
+    "        answer = []\n",
+    "        smallest = 1000000\n",
+    "        for word in dic1:\n",
+    "            if word in dic2:\n",
+    "                _sum = dic1[word] + dic2[word]\n",
+    "                if smallest > _sum:\n",
+    "                    smallest = _sum\n",
+    "                    answer = [word]\n",
+    "                elif smallest == _sum:\n",
+    "                    answer.append(word)\n",
+    "        return answer\n",
+    "Solution.findRestaurant([\"Shogun\", \"Tapioca Express\", \"Burger King\", \"KFC\"],[\"KFC\", \"Shogun\", \"Burger King\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 126,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Shogun']"
+      ]
+     },
+     "execution_count": 126,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, slightly slow\"\n",
+    "def findRestaurant(list1, list2):\n",
+    "    common = set(list1)&set(list2)\n",
+    "    index = len(list1)+ len(list2)\n",
+    "    if len(common)==1:\n",
+    "        return list(common)\n",
+    "    else:\n",
+    "        for i in common:\n",
+    "            index = min(list1.index(i)+list2.index(i) , index)\n",
+    "    return [i for i in common if list1.index(i)+list2.index(i)== index]\n",
+    "\n",
+    "findRestaurant([\"Shogun\", \"Tapioca Express\", \"Burger King\", \"KFC\"],[\"KFC\", \"Shogun\", \"Burger King\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 127,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4"
+      ]
+     },
+     "execution_count": 127,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"\"\"624. Maximum Distance in Arrays, also in array\"\"\"\n",
+    "\"\"\"Given m arrays, and each array is sorted in ascending order. \n",
+    "Now you can pick up two integers from two different arrays (each array picks one) and \n",
+    "calculate the distance. We define the distance between two integers a and b to be their \n",
+    "absolute difference |a-b|. Your task is to find the maximum distance.\n",
+    "\n",
+    "Example 1:\n",
+    "Input: \n",
+    "[[1,2,3],\n",
+    " [4,5],\n",
+    " [1,2,3]]\n",
+    "Output: 4\n",
+    "1\n",
+    "2\n",
+    "3\n",
+    "4\n",
+    "5\n",
+    "Explanation:\n",
+    "One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.\"\"\"\n",
+    "class Solution(object):\n",
+    "    def maxDistance(arrays):\n",
+    "        \"\"\"\n",
+    "        :type arrays: List[List[int]]\n",
+    "        :rtype: int\n",
+    "        \"\"\"\n",
+    "        len_arrays=len(arrays)\n",
+    "        res=0\n",
+    "        min_first=arrays[0][0]\n",
+    "        max_last=arrays[0][len(arrays[0])-1]\n",
+    "        for i in range(1,len_arrays):\n",
+    "            array_i=arrays[i]\n",
+    "            res=max(abs(array_i[len(array_i)-1]-min_first),abs(array_i[0]-max_last),res)\n",
+    "            min_first=min(array_i[0],min_first)\n",
+    "            max_last=max(array_i[len(array_i)-1],max_last)\n",
+    "\n",
+    "        return res\n",
+    "Solution.maxDistance([[1,2,3],[4,5],[1,2,3]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 141,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[2, 3]"
+      ]
+     },
+     "execution_count": 141,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"645. Set Mismatch\"\n",
+    "\"\"\"The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, \n",
+    "one of the numbers in the set got duplicated to another number in the set, which results \n",
+    "in repetition of one number and loss of another number.\n",
+    "\n",
+    "Given an array nums representing the data status of this set after the error. Your task is to \n",
+    "firstly find the number occurs twice and then find the number that is missing. Return them in the form of an array.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: nums = [1,2,2,4]\n",
+    "Output: [2,3]\n",
+    "\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def findErrorNums(nums):\n",
+    "        \"\"\"\n",
+    "        :type nums: List[int]\n",
+    "        :rtype: List[int]\n",
+    "        \"\"\"\n",
+    "        hashs = [0] * len(nums)\n",
+    "        missing = -1\n",
+    "        for i in range(len(nums)):\n",
+    "            hashs[nums[i] - 1] += 1\n",
+    "        return [hashs.index(2) + 1, hashs.index(0) + 1]\n",
+    "Solution.findErrorNums([1,2,2,4])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 139,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[2, 3]"
+      ]
+     },
+     "execution_count": 139,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, exceed limit time\"\n",
+    "def findErrorNums(nums):\n",
+    "    dic = {i:nums.count(i) for i in range(1,len(nums)+1)}\n",
+    "    a = [i for i in dic if dic[i]==2]\n",
+    "    b = [i for i in dic if dic[i]==0]\n",
+    "    return a+b\n",
+    "findErrorNums([1,2,2,4])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 148,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "ename": "AttributeError",
+     "evalue": "'list' object has no attribute 'id'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-148-56fb6368076d>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     35\u001b[0m                     sum(dfs(eid) for eid in employee.subordinates))\n\u001b[1;32m     36\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mdfs\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mquery_id\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 37\u001b[0;31m \u001b[0mSolution\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetImportance\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m5\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m3\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m3\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;36m3\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m3\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m1\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m<ipython-input-148-56fb6368076d>\u001b[0m in \u001b[0;36mgetImportance\u001b[0;34m(employees, query_id)\u001b[0m\n\u001b[1;32m     29\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0mSolution\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mobject\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     30\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mgetImportance\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0memployees\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mquery_id\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 31\u001b[0;31m         \u001b[0memap\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mid\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0me\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0me\u001b[0m \u001b[0;32min\u001b[0m \u001b[0memployees\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     32\u001b[0m         \u001b[0;32mdef\u001b[0m \u001b[0mdfs\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0meid\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     33\u001b[0m             \u001b[0memployee\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0memap\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0meid\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m<ipython-input-148-56fb6368076d>\u001b[0m in \u001b[0;36m<dictcomp>\u001b[0;34m(.0)\u001b[0m\n\u001b[1;32m     29\u001b[0m \u001b[0;32mclass\u001b[0m \u001b[0mSolution\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mobject\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     30\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mgetImportance\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0memployees\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mquery_id\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 31\u001b[0;31m         \u001b[0memap\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mid\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0me\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0me\u001b[0m \u001b[0;32min\u001b[0m \u001b[0memployees\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     32\u001b[0m         \u001b[0;32mdef\u001b[0m \u001b[0mdfs\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0meid\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     33\u001b[0m             \u001b[0memployee\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0memap\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0meid\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mAttributeError\u001b[0m: 'list' object has no attribute 'id'"
+     ]
+    }
+   ],
+   "source": [
+    "\"690. Employee Importance\"\n",
+    "\"\"\"You are given a data structure of employee information, which includes the employee's unique id, \n",
+    "their importance value and their direct subordinates' id.\n",
+    "\n",
+    "For example, employee 1 is the leader of employee 2, and employee 2 is the leader of employee 3. \n",
+    "They have importance value 15, 10 and 5, respectively. Then employee 1 has a data structure like [1, 15, [2]], \n",
+    "and employee 2 has [2, 10, [3]], and employee 3 has [3, 5, []]. Note that although employee 3 is \n",
+    "also a subordinate of employee 1, the relationship is not direct.\n",
+    "\n",
+    "Now given the employee information of a company, and an employee id, you need to return the total \n",
+    "importance value of this employee and all their subordinates.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: [[1, 5, [2, 3]], [2, 3, []], [3, 3, []]], 1\n",
+    "Output: 11\n",
+    "Explanation:\n",
+    "Employee 1 has importance value 5, and he has two direct subordinates: employee 2 and employee 3. \n",
+    "They both have importance value 3. So the total importance value of employee 1 is 5 + 3 + 3 = 11.\"\"\"\n",
+    "\n",
+    "\"\"\"# Definition for Employee.\n",
+    "class Employee:\n",
+    "    def __init__(self, id: int, importance: int, subordinates: List[int]):\n",
+    "        self.id = id\n",
+    "        self.importance = importance\n",
+    "        self.subordinates = subordinates\n",
+    "\"\"\"\n",
+    "\"Sample solution, not suitable for regular environment\"\n",
+    "class Solution(object):\n",
+    "    def getImportance(employees, query_id):\n",
+    "        emap = {e.id: e for e in employees}\n",
+    "        def dfs(eid):\n",
+    "            employee = emap[eid]\n",
+    "            return (employee.importance +\n",
+    "                    sum(dfs(eid) for eid in employee.subordinates))\n",
+    "        return dfs(query_id)\n",
+    "Solution.getImportance([[1, 5, [2, 3]], [2, 3, []], [3, 3, []]], 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 147,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3"
+      ]
+     },
+     "execution_count": 147,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"My solution, not working in leetcode\"\n",
+    "def getImportance(employees, id):\n",
+    "    dic = {a: (b, c) for a,b,c in employees}\n",
+    "    imp = dic[id][0]\n",
+    "    for i in dic[id][1]:\n",
+    "        imp += dic[id][0]\n",
+    "    return imp\n",
+    "\n",
+    "getImportance([[1,2,[2]], [2,3,[]]],2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\"705. Design HashSet\"\n",
+    "\"\"\"Design a HashSet without using any built-in hash table libraries.\n",
+    "\n",
+    "To be specific, your design should include these functions:\n",
+    "\n",
+    "add(value): Insert a value into the HashSet. \n",
+    "contains(value) : Return whether the value exists in the HashSet or not.\n",
+    "remove(value): Remove a value in the HashSet. If the value does not exist in the HashSet, do nothing.\n",
+    "\n",
+    "Example:\n",
+    "\n",
+    "MyHashSet hashSet = new MyHashSet();\n",
+    "hashSet.add(1);         \n",
+    "hashSet.add(2);         \n",
+    "hashSet.contains(1);    // returns true\n",
+    "hashSet.contains(3);    // returns false (not found)\n",
+    "hashSet.add(2);          \n",
+    "hashSet.contains(2);    // returns true\n",
+    "hashSet.remove(2);          \n",
+    "hashSet.contains(2);    // returns false (already removed)\"\"\"\n",
+    "\"Sample solution, 不懂\"\n",
+    "class MyHashSet:\n",
+    "\n",
+    "    def __init__(self):\n",
+    "        \"\"\"\n",
+    "        Initialize your data structure here.\n",
+    "        \"\"\"\n",
+    "        self.buckets = 1000\n",
+    "        self.itemsPerBucket = 1001\n",
+    "        self.table = [[] for _ in range(self.buckets)]\n",
+    "\n",
+    "    def hash(self, key):\n",
+    "        return key % self.buckets\n",
+    "    \n",
+    "    def pos(self, key):\n",
+    "        return key // self.buckets\n",
+    "    \n",
+    "    def add(self, key):\n",
+    "        \"\"\"\n",
+    "        :type key: int\n",
+    "        :rtype: void\n",
+    "        \"\"\"\n",
+    "        hashkey = self.hash(key)\n",
+    "        if not self.table[hashkey]:\n",
+    "            self.table[hashkey] = [0] * self.itemsPerBucket\n",
+    "        self.table[hashkey][self.pos(key)] = 1\n",
+    "        \n",
+    "    def remove(self, key):\n",
+    "        \"\"\"\n",
+    "        :type key: int\n",
+    "        :rtype: void\n",
+    "        \"\"\"\n",
+    "        hashkey = self.hash(key)\n",
+    "        if self.table[hashkey]:\n",
+    "            self.table[hashkey][self.pos(key)] = 0\n",
+    "\n",
+    "    def contains(self, key):\n",
+    "        \"\"\"\n",
+    "        Returns true if this set did not already contain the specified element\n",
+    "        :type key: int\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        hashkey = self.hash(key)\n",
+    "        return (self.table[hashkey] != []) and (self.table[hashkey][self.pos(key)] == 1)\n",
+    "\n",
+    "# Your MyHashSet object will be instantiated and called as such:\n",
+    "# obj = MyHashSet()\n",
+    "# obj.add(key)\n",
+    "# obj.remove(key)\n",
+    "# param_3 = obj.contains(key)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 150,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{''} \n",
+      "{'', 'a'} a\n",
+      "{'', 'ap', 'a'} ap\n",
+      "{'', 'app', 'ap', 'a'} app\n",
+      "{'', 'appl', 'a', 'ap', 'app'} appl\n",
+      "{'', 'appl', 'a', 'apple', 'ap', 'app'} apple\n",
+      "{'', 'apply', 'appl', 'a', 'apple', 'ap', 'app'} apple\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'apple'"
+      ]
+     },
+     "execution_count": 150,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"720. Longest Word in Dictionary\"\n",
+    "\"\"\"Given a list of strings words representing an English Dictionary, find the longest \n",
+    "word in words that can be built one character at a time by other words in words. \n",
+    "If there is more than one possible answer, return the longest word with the smallest lexicographical order.\n",
+    "\n",
+    "If there is no answer, return the empty string.\n",
+    "Example 1:\n",
+    "\n",
+    "Input: \n",
+    "words = [\"w\",\"wo\",\"wor\",\"worl\", \"world\"]\n",
+    "Output: \"world\"\n",
+    "Explanation: \n",
+    "The word \"world\" can be built one character at a time by \"w\", \"wo\", \"wor\", and \"worl\".\n",
+    "Example 2:\n",
+    "\n",
+    "Input: \n",
+    "words = [\"a\", \"banana\", \"app\", \"appl\", \"ap\", \"apply\", \"apple\"]\n",
+    "Output: \"apple\"\n",
+    "Explanation: \n",
+    "Both \"apply\" and \"apple\" can be built from other words in the dictionary. However, \n",
+    "\"apple\" is lexicographically smaller than \"apply\".\"\"\"\n",
+    "\"Sample Solution\"\n",
+    "class Solution(object):\n",
+    "    def longestWord(words):\n",
+    "        \"\"\"\n",
+    "        :type words: List[str]\n",
+    "        :rtype: str\n",
+    "        \"\"\"\n",
+    "        words.sort()\n",
+    "        res = set([''])\n",
+    "        longestWord = ''\n",
+    "        for word in words:\n",
+    "            print(res, longestWord)\n",
+    "            if word[:-1] in res:\n",
+    "                res.add(word)\n",
+    "                if len(word) > len(longestWord):\n",
+    "                    longestWord = word\n",
+    "        return longestWord\n",
+    "Solution.longestWord([\"a\", \"banana\", \"app\", \"appl\", \"ap\", \"apply\", \"apple\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 159,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 159,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"734. Sentence Similarity\"\n",
+    "\"\"\"Given two sentences words1, words2 (each represented as an array of strings), and a list of similar \n",
+    "word pairs pairs, determine if two sentences are similar.\n",
+    "\n",
+    "For example, “great acting skills” and “fine drama talent” are similar, if the similar word pairs \n",
+    "are pairs = [[\"great\", \"fine\"], [\"acting\",\"drama\"], [\"skills\",\"talent\"]].\n",
+    "\n",
+    "Note that the similarity relation is not transitive. For example, if “great” and “fine” are similar, \n",
+    "and “fine” and “good” are similar, “great” and “good” are not necessarily similar.\n",
+    "\n",
+    "However, similarity is symmetric. For example, “great” and “fine” being similar is the same as “fine” \n",
+    "and “great” being similar.\n",
+    "\n",
+    "Also, a word is always similar with itself. For example, the sentences words1 = [\"great\"], \n",
+    "words2 = [\"great\"], pairs = [] are similar, even though there are no specified similar word pairs.\n",
+    "\n",
+    "Finally, sentences can only be similar if they have the same number of words. So a sentence like \n",
+    "words1 = [\"great\"] can never be similar to words2 = [\"doubleplus\",\"good\"].\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def areSentencesSimilar(words1, words2, pairs):\n",
+    "        \"\"\"\n",
+    "        :type words1: List[str]\n",
+    "        :type words2: List[str]\n",
+    "        :type pairs: List[List[str]]\n",
+    "        :rtype: bool\n",
+    "        \"\"\"\n",
+    "        if len(words1) != len(words2):\n",
+    "            return False\n",
+    "        for i, w1 in enumerate(words1):\n",
+    "            w2 = words2[i]\n",
+    "            if not(w1 == w2 or [w1,w2] in pairs or [w2,w1] in pairs):\n",
+    "                return False\n",
+    "        return True\n",
+    "Solution.areSentencesSimilar([\"great\",\"acting\",\"skills\"], [\"fine\",\"drama\",\"talent\"],[[\"great\", \"fine\"], [\"acting\",\"drama\"], [\"skills\",\"talent\"]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 161,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 161,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"Sample solution2\"\n",
+    "class Solution2:\n",
+    "    def areSentencesSimilar(words1, words2, pairs):\n",
+    "        if len(words1) != len(words2): return False\n",
+    "        \n",
+    "        similar_words = {}\n",
+    "        \n",
+    "        for w1, w2 in pairs:\n",
+    "            if not w1 in similar_words: similar_words[w1] = set()\n",
+    "            if not w2 in similar_words: similar_words[w2] = set()\n",
+    "            similar_words[w1].add(w2)\n",
+    "            similar_words[w2].add(w1)\n",
+    "        \n",
+    "        for w1, w2 in zip(words1, words2):\n",
+    "            if w1 == w2: continue\n",
+    "            if w1 not in similar_words: return False\n",
+    "            if w2 not in similar_words[w1]: return False\n",
+    "        \n",
+    "        return True\n",
+    "Solution2.areSentencesSimilar([\"great\",\"acting\",\"skills\"], [\"fine\",\"drama\",\"talent\"],[[\"great\", \"fine\"], [\"acting\",\"drama\"], [\"skills\",\"talent\"]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 167,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "looks looks\n",
+      "pest pest\n",
+      "stew pest\n",
+      "show pest\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'pest'"
+      ]
+     },
+     "execution_count": 167,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"748. Shortest Completing Word\"\n",
+    "\"\"\"Find the minimum length word from a given dictionary words, which has all the letters \n",
+    "from the string licensePlate. Such a word is said to complete the given string licensePlate\n",
+    "\n",
+    "Here, for letters we ignore case. For example, \"P\" on the licensePlate still matches \"p\" on the word.\n",
+    "\n",
+    "It is guaranteed an answer exists. If there are multiple answers, return the one that occurs first in the array.\n",
+    "\n",
+    "The license plate might have the same letter occurring multiple times. For example, given a \n",
+    "licensePlate of \"PP\", the word \"pair\" does not complete the licensePlate, but the word \"supper\" does.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: licensePlate = \"1s3 PSt\", words = [\"step\", \"steps\", \"stripe\", \"stepple\"]\n",
+    "Output: \"steps\"\n",
+    "Explanation: The smallest length word that contains the letters \"S\", \"P\", \"S\", and \"T\".\n",
+    "Note that the answer is not \"step\", because the letter \"s\" must occur in the word twice.\n",
+    "Also note that we ignored case for the purposes of comparing whether a letter exists in the word.\n",
+    "Example 2:\n",
+    "\n",
+    "Input: licensePlate = \"1s3 456\", words = [\"looks\", \"pest\", \"stew\", \"show\"]\n",
+    "Output: \"pest\"\n",
+    "Explanation: There are 3 smallest length words that contains the letters \"s\".\n",
+    "We return the one that occurred first.\"\"\"\n",
+    "\"Samplet Solution\"\n",
+    "class Solution(object):\n",
+    "    def shortestCompletingWord(licensePlate, words):\n",
+    "        \"\"\"\n",
+    "        :type licensePlate: str\n",
+    "        :type words: List[str]\n",
+    "        :rtype: str\n",
+    "        \"\"\"\n",
+    "        subs = \"1234567890\"\n",
+    "        licensePlate = licensePlate.replace(\" \", \"\").lower()\n",
+    "        for sub in subs:\n",
+    "            licensePlate = licensePlate.replace(sub, \"\")\n",
+    "        res = \"\"\n",
+    "        plateCount = collections.Counter(licensePlate)\n",
+    "        for word in words:\n",
+    "            match = True\n",
+    "            wordCount = collections.Counter(word)\n",
+    "            for w, c in plateCount.items():\n",
+    "                if c > wordCount[w]:\n",
+    "                    match = False\n",
+    "            if (not res or len(res) > len(word)) and match:\n",
+    "                res = word\n",
+    "            print(word, res)\n",
+    "        return res\n",
+    "Solution.shortestCompletingWord(\"1s3 456\",[\"looks\", \"pest\", \"stew\", \"show\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 187,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[1, 4, 3, 2, 0]"
+      ]
+     },
+     "execution_count": 187,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"760. Find Anagram Mappings\"\n",
+    "\"\"\"Given two lists A and B, and B is an anagram of A. B is an anagram of A means B is made \n",
+    "by randomizing the order of the elements in A.\n",
+    "\n",
+    "We want to find an index mapping P, from A to B. A mapping P[i] = j means the ith element \n",
+    "in A appears in B at index j.\n",
+    "\n",
+    "These lists A and B may contain duplicates. If there are multiple answers, output any of them.\n",
+    "\n",
+    "For example, given\n",
+    "\n",
+    "A = [12, 28, 46, 32, 50]\n",
+    "B = [50, 12, 32, 46, 28]\n",
+    "We should return\n",
+    "[1, 4, 3, 2, 0]\n",
+    "as P[0] = 1 because the 0th element of A appears at B1, and P1 = 4 because the 1st element of \n",
+    "A appears at B[4], and so on.\"\"\"\n",
+    "\"My solution, 没有考虑duplicate\"\n",
+    "class Solution:\n",
+    "    def anagramMappings(A, B):\n",
+    "        P = [0]*len(A)\n",
+    "        for i,v in enumerate(A):\n",
+    "            P[i] = B.index(v)\n",
+    "        return P\n",
+    "Solution.anagramMappings([12, 28, 46, 32, 50],[50, 12, 32, 46, 28])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 186,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[1, 4, 3, 2, 0]"
+      ]
+     },
+     "execution_count": 186,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"Sample Solution，没有考虑duplicate\"\n",
+    "class Solution2:\n",
+    "    def anagramMappings(A, B):\n",
+    "        \"\"\"\n",
+    "        :type A: List[int]\n",
+    "        :type B: List[int]\n",
+    "        :rtype: List[int]\n",
+    "        \"\"\"\n",
+    "        lookup = { val: i for i, val in enumerate(B)}\n",
+    "        return [lookup[val] for val in A]\n",
+    "Solution.anagramMappings([12, 28, 46, 32, 50],[50, 12, 32, 46, 28])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 196,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3"
+      ]
+     },
+     "execution_count": 196,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"771. Jewels and Stones\"\n",
+    "\"\"\"You're given strings J representing the types of stones that are jewels, and S representing \n",
+    "the stones you have.  Each character in S is a type of stone you have.  You want to know how \n",
+    "many of the stones you have are also jewels.\n",
+    "\n",
+    "The letters in J are guaranteed distinct, and all characters in J and S are letters. \n",
+    "Letters are case sensitive, so \"a\" is considered a different type of stone from \"A\".\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: J = \"aA\", S = \"aAAbbbb\"\n",
+    "Output: 3\n",
+    "Example 2:\n",
+    "\n",
+    "Input: J = \"z\", S = \"ZZ\"\n",
+    "Output: 0\"\"\"\n",
+    "\"My solution\"\n",
+    "class Solution:\n",
+    "    def numJewelsInStones(J, S):\n",
+    "        jewel = 0\n",
+    "        dic = Counter(S)\n",
+    "        for i in J:\n",
+    "            jewel += dic[i]\n",
+    "        return jewel\n",
+    "Solution.numJewelsInStones(\"aA\", \"aAAbbbb\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 199,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['900 google.mail.com',\n",
+       " '901 mail.com',\n",
+       " '951 com',\n",
+       " '50 yahoo.com',\n",
+       " '1 intel.mail.com',\n",
+       " '5 wiki.org',\n",
+       " '5 org']"
+      ]
+     },
+     "execution_count": 199,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"811. Subdomain Visit Count\"\n",
+    "\"\"\"A website domain like \"discuss.leetcode.com\" consists of various subdomains. \n",
+    "At the top level, we have \"com\", at the next level, we have \"leetcode.com\", and at the lowest level, \n",
+    "\"discuss.leetcode.com\". When we visit a domain like \"discuss.leetcode.com\", we will also visit the parent \n",
+    "domains \"leetcode.com\" and \"com\" implicitly.\n",
+    "\n",
+    "Now, call a \"count-paired domain\" to be a count (representing the number of visits this domain received), \n",
+    "followed by a space, followed by the address. An example of a count-paired domain might be \"9001 discuss.leetcode.com\".\n",
+    "\n",
+    "We are given a list cpdomains of count-paired domains. We would like a list of count-paired domains, \n",
+    "(in the same format as the input, and in any order), that explicitly counts the number of visits to each subdomain.\n",
+    "\n",
+    "Example 1:\n",
+    "Input: \n",
+    "[\"9001 discuss.leetcode.com\"]\n",
+    "Output: \n",
+    "[\"9001 discuss.leetcode.com\", \"9001 leetcode.com\", \"9001 com\"]\n",
+    "Explanation: \n",
+    "We only have one website domain: \"discuss.leetcode.com\". As discussed above, the subdomain \"leetcode.com\" \n",
+    "and \"com\" will also be visited. So they will all be visited 9001 times.\n",
+    "\n",
+    "Example 2:\n",
+    "Input: \n",
+    "[\"900 google.mail.com\", \"50 yahoo.com\", \"1 intel.mail.com\", \"5 wiki.org\"]\n",
+    "Output: \n",
+    "[\"901 mail.com\",\"50 yahoo.com\",\"900 google.mail.com\",\"5 wiki.org\",\"5 org\",\"1 intel.mail.com\",\"951 com\"]\n",
+    "Explanation: \n",
+    "We will visit \"google.mail.com\" 900 times, \"yahoo.com\" 50 times, \"intel.mail.com\" once and \"wiki.org\" 5 times. \n",
+    "For the subdomains, we will visit \"mail.com\" 900 + 1 = 901 times, \"com\" 900 + 50 + 1 = 951 times, and \"org\" 5 times.\"\"\"\n",
+    "\"Sample Solution\"\n",
+    "class Solution(object):\n",
+    "    def subdomainVisits(cpdomains):\n",
+    "        ans = collections.Counter()\n",
+    "        for domain in cpdomains:\n",
+    "            count, domain = domain.split()\n",
+    "            count = int(count)\n",
+    "            frags = domain.split('.')\n",
+    "            for i in range(len(frags)):\n",
+    "                ans[\".\".join(frags[i:])] += count\n",
+    "\n",
+    "        return [\"{} {}\".format(ct, dom) for dom, ct in ans.items()]\n",
+    "Solution.subdomainVisits([\"900 google.mail.com\", \"50 yahoo.com\", \"1 intel.mail.com\", \"5 wiki.org\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 221,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['ejt']"
+      ]
+     },
+     "execution_count": 221,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"884. Uncommon Words from Two Sentences\"\n",
+    "\"\"\"We are given two sentences A and B.  (A sentence is a string of space separated words.  \n",
+    "Each word consists only of lowercase letters.)\n",
+    "\n",
+    "A word is uncommon if it appears exactly once in one of the sentences, and does not appear in the other sentence.\n",
+    "\n",
+    "Return a list of all uncommon words. \n",
+    "\n",
+    "You may return the list in any order.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: A = \"this apple is sweet\", B = \"this apple is sour\"\n",
+    "Output: [\"sweet\",\"sour\"]\n",
+    "Example 2:\n",
+    "\n",
+    "Input: A = \"apple apple\", B = \"banana\"\n",
+    "Output: [\"banana\"]\"\"\"\n",
+    "class Solution(object):\n",
+    "    def uncommonFromSentences(A, B):\n",
+    "        count = {}\n",
+    "        for word in A.split():\n",
+    "            count[word] = count.get(word, 0) + 1\n",
+    "        for word in B.split():\n",
+    "            count[word] = count.get(word, 0) + 1\n",
+    "\n",
+    "        #Alternatively:\n",
+    "        #count = collections.Counter(A.split())\n",
+    "        #count += collections.Counter(B.split())\n",
+    "\n",
+    "        return [word for word in count if count[word] == 1]\n",
+    "Solution.uncommonFromSentences(\"s z z z s\",\"s z ejt\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 236,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 236,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"953. Verifying an Alien Dictionary\"\n",
+    "\"\"\"In an alien language, surprisingly they also use english lowercase letters, \n",
+    "but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.\n",
+    "\n",
+    "Given a sequence of words written in the alien language, and the order of the alphabet, \n",
+    "return true if and only if the given words are sorted lexicographicaly in this alien language.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: words = [\"hello\",\"leetcode\"], order = \"hlabcdefgijkmnopqrstuvwxyz\"\n",
+    "Output: true\n",
+    "Explanation: As 'h' comes before 'l' in this language, then the sequence is sorted.\n",
+    "Example 2:\n",
+    "\n",
+    "Input: words = [\"word\",\"world\",\"row\"], order = \"worldabcefghijkmnpqstuvxyz\"\n",
+    "Output: false\n",
+    "Explanation: As 'd' comes after 'l' in this language, then words[0] > words[1], hence the sequence is unsorted.\n",
+    "Example 3:\n",
+    "\n",
+    "Input: words = [\"apple\",\"app\"], order = \"abcdefghijklmnopqrstuvwxyz\"\n",
+    "Output: false\n",
+    "Explanation: The first three characters \"app\" match, and the second string is shorter (in size.) \n",
+    "According to lexicographical rules \"apple\" > \"app\", because 'l' > '∅', where '∅' is defined as the \n",
+    "blank character which is less than any other character (More info).\"\"\"\n",
+    "\"Sample Solution\"\n",
+    "class Solution(object):\n",
+    "    def isAlienSorted(words, order):\n",
+    "        order_index = {c: i for i, c in enumerate(order)}\n",
+    "\n",
+    "        for i in range(len(words) - 1):\n",
+    "            word1 = words[i]\n",
+    "            word2 = words[i+1]\n",
+    "\n",
+    "            # Find the first difference word1[k] != word2[k].\n",
+    "            for k in range(min(len(word1), len(word2))):\n",
+    "                # If they compare badly, it's not sorted.\n",
+    "                if word1[k] != word2[k]:\n",
+    "                    if order_index[word1[k]] > order_index[word2[k]]:\n",
+    "                        return False\n",
+    "                    break\n",
+    "            else:\n",
+    "                # If we didn't find a first difference, the\n",
+    "                # words are like (\"app\", \"apple\").\n",
+    "                if len(word1) > len(word2):\n",
+    "                    return False\n",
+    "\n",
+    "        return True\n",
+    "Solution.isAlienSorted([\"word\",\"world\",\"row\"], \"worldabcefghijkmnpqstuvxyz\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 238,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "3"
+      ]
+     },
+     "execution_count": 238,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"961. N-Repeated Element in Size 2N Array\"\n",
+    "\"\"\"In a array A of size 2N, there are N+1 unique elements, and exactly one of these elements is repeated N times.\n",
+    "\n",
+    "Return the element repeated N times.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: [1,2,3,3]\n",
+    "Output: 3\n",
+    "Example 2:\n",
+    "\n",
+    "Input: [2,1,2,5,3,2]\n",
+    "Output: 2\n",
+    "Example 3:\n",
+    "\n",
+    "Input: [5,1,5,2,5,3,5,4]\n",
+    "Output: 5\"\"\"\n",
+    "\"My solution\"\n",
+    "class Solution(object):\n",
+    "    def repeatedNTimes(A):\n",
+    "        count = collections.Counter(A)\n",
+    "        for k in count:\n",
+    "            if count[k] > 1:\n",
+    "                return k\n",
+    "Solution.repeatedNTimes([1,2,3,3])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 240,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[2, 4, 6, 8, 10, 14]"
+      ]
+     },
+     "execution_count": 240,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "\"970. Powerful Integers\"\n",
+    "\"\"\"Given two positive integers x and y, an integer is powerful if it is equal to x^i + y^j \n",
+    "for some integers i >= 0 and j >= 0.\n",
+    "\n",
+    "Return a list of all powerful integers that have value less than or equal to bound.\n",
+    "\n",
+    "You may return the answer in any order.  In your answer, each value should occur at most once.\n",
+    "\n",
+    "Example 1:\n",
+    "\n",
+    "Input: x = 2, y = 3, bound = 10\n",
+    "Output: [2,3,4,5,7,9,10]\n",
+    "Explanation: \n",
+    "2 = 2^0 + 3^0\n",
+    "3 = 2^1 + 3^0\n",
+    "4 = 2^0 + 3^1\n",
+    "5 = 2^1 + 3^1\n",
+    "7 = 2^2 + 3^1\n",
+    "9 = 2^3 + 3^0\n",
+    "10 = 2^0 + 3^2\n",
+    "Example 2:\n",
+    "\n",
+    "Input: x = 3, y = 5, bound = 15\n",
+    "Output: [2,4,6,8,10,14]\"\"\"\n",
+    "\"Sample solution\"\n",
+    "class Solution(object):\n",
+    "    def powerfulIntegers(x, y, bound):\n",
+    "        \"\"\"\n",
+    "        :type x: int\n",
+    "        :type y: int\n",
+    "        :type bound: int\n",
+    "        :rtype: List[int]\n",
+    "        \"\"\"\n",
+    "        res = set()\n",
+    "        x_max,y_max = 20 if x > 1 else 1,20 if y > 1 else 1\n",
+    "        for i in range(x_max):\n",
+    "            for j in range(y_max):\n",
+    "                v = pow(x,i) + pow(y,j)\n",
+    "                if v <= bound:\n",
+    "                    res.add(v)\n",
+    "        return list(res)\n",
+    "Solution.powerfulIntegers(3, 5, 15)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
